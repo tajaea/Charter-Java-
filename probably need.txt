@@ -1,0 +1,119 @@
+  if(pickupMarker != null)
+        {
+            pickupMarker.remove();
+        }
+        //Notifying Driver That The Charter Was Cancelled
+        deletePolyLines();
+        customerId = "";
+
+
+ String destination = dataSnapshot.getValue().toString();
+                    mDestination.setText("Destination"+destination);
+                    //The else portion of the code is used when the customer called a Charter but didn't specif their destination with the Places Api
+                }else {
+                    //Displaying a default value to the screen
+                    mDestination.setText("Destination: --");
+                }
+
+                <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text = "I am a Driver"
+                        android:id = "@+id/driver"/>
+
+                    <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text = "I am a Customer"
+                    android:id = "@+id/customer"/>
+
+
+    <EditText
+        android:layout_marginTop="40sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10sp"
+        android:hint="Email"
+        android:id="@+id/email"
+        android:autofillHints="Enter Your Email Here"
+        android:inputType="textEmailAddress" />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Password"
+        android:id="@+id/password"
+        android:autofillHints="Enter Your Password Here"
+        android:inputType="textPassword"
+        android:layout_marginBottom="60sp"/
+
+        <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/buttons">
+
+                    <Button
+                        android:id="@+id/login"
+                        android:layout_width="0sp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom|start"
+                        android:text="Login" />
+
+                    <Button
+                        android:id="@+id/registration"
+                        android:layout_width="0sp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom|end"
+                        android:text="Registration" />
+
+                </LinearLayout>
+            </RelativeLayout>
+
+            //This is for registration to Firebase
+            final String email = mEmail.toString();
+                            final String password = mPassword.toString();
+                            mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(DriverLoginActivity.this, new OnCompleteListener<AuthResult>() {
+                                @Override
+                                public void onComplete(@NonNull Task<AuthResult> task) {
+                                    if(!task.isSuccessful())
+                                    {
+                                        Toast.makeText(DriverLoginActivity.this, "Error", Toast.LENGTH_SHORT).show();
+                                    }
+                                    else
+                                    {
+                                        String user_id = mAuth.getCurrentUser().getUid();
+                                        DatabaseReference current_user_db = FirebaseDatabase.getInstance().getReference().child("Users").child("Drivers").child(user_id).child("user");
+                                        current_user_db.setValue(true);
+                                    }
+
+
+
+
+
+
+
+
+
+
+                                    mRegister.setOnClickListener(new View.OnClickListener()
+                                            {
+                                                @Override
+                                                public void onClick(View v)
+                                                {
+                                                    final String email = mEmail.toString();
+                                                    final String password = mPassword.toString();
+                                                    mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(DriverLoginActivity.this, new OnCompleteListener<AuthResult>() {
+                                                        @Override
+                                                        public void onComplete(@NonNull Task<AuthResult> task)
+                                                        {
+                                                            Intent intent = new Intent(DriverLoginActivity.this, DriverRegistrationScreen.class);
+                                                            startActivity(intent);
+                                                        }
+                                                    });
+                                                }
+                                            });
